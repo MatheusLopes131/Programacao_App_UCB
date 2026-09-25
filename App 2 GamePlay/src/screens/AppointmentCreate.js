@@ -6,8 +6,7 @@ import {
   TouchableOpacity, 
   TextInput, 
   ScrollView,
-  StatusBar,
-  Image
+  StatusBar
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Background from '../components/Background';
@@ -43,139 +42,146 @@ export default function AppointmentCreate() {
       alert('Por favor, preencha todos os campos obrigatórios!');
       return;
     }
-    alert(`Partida agendada com sucesso!\nCategoria: ${selectedCategory.title}\nServidor: ${selectedServer.title}\nData: ${day}/${month} às ${hour}:${minute}`);
-    navigation.goBack(); // Volta para a Home
+    alert(
+      `Partida agendada com sucesso!\n` +
+      `Categoria: ${selectedCategory.title}\n` +
+      `Servidor: ${selectedServer.title}\n` +
+      `Data: ${day}/${month} às ${hour}:${minute}`
+    );
+    navigation.goBack();
   }
 
   return (
-    <Background>
-      <StatusBar barStyle="light-content" backgroundColor="#0D0E22" />
-      
-      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+    <>
+      <Background>
+        <StatusBar barStyle="light-content" backgroundColor="#0D0E22" />
         
-        {/* Cabeçalho */}
-        <View style={styles.header}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Text style={styles.backButton}>←</Text>
-          </TouchableOpacity>
-          <Text style={styles.headerTitle}>Agendar partida</Text>
-          <View style={{ width: 24 }} /> {/* Espaçador */}
-        </View>
-
-        {/* Seção Categoria */}
-        <Text style={styles.sectionLabel}>Categoria</Text>
-        <View style={styles.categoriesContainer}>
-          {categories.map((cat) => (
-            <TouchableOpacity 
-              key={cat.id} 
-              onPress={() => setSelectedCategory(cat)}
-            >
-              <View style={[
-                styles.categoryWrapper,
-                selectedCategory?.id === cat.id && styles.categorySelected
-              ]}>
-                <CategoryCard title={cat.title} icon={cat.icon} />
-              </View>
+        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+          
+          {/* Cabeçalho */}
+          <View style={styles.header}>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Text style={styles.backButton}>←</Text>
             </TouchableOpacity>
-          ))}
-        </View>
+            <Text style={styles.headerTitle}>Agendar partida</Text>
+            <View style={styles.spacer} />
+          </View>
 
-        {/* Botão Selecionar Servidor */}
-        <TouchableOpacity 
-          style={styles.serverButton} 
-          onPress={() => setModalVisible(true)}
-        >
-          <Text style={styles.serverButtonText}>
-            {selectedServer ? selectedServer.title : 'Selecione um servidor'}
-          </Text>
-          <Text style={styles.serverButtonArrow}>›</Text>
-        </TouchableOpacity>
+          {/* Seção Categoria */}
+          <Text style={styles.sectionLabel}>Categoria</Text>
+          <View style={styles.categoriesContainer}>
+            {categories.map((cat) => (
+              <TouchableOpacity 
+                key={cat.id} 
+                onPress={() => setSelectedCategory(cat)}
+              >
+                <View style={[
+                  styles.categoryWrapper,
+                  selectedCategory?.id === cat.id && styles.categorySelected
+                ]}>
+                  <CategoryCard title={cat.title} icon={cat.icon} />
+                </View>
+              </TouchableOpacity>
+            ))}
+          </View>
 
-        {/* Seção Data e Hora */}
-        <View style={styles.dateTimeSection}>
-          <View style={styles.dateTimeGroup}>
-            <Text style={styles.sectionLabel}>Dia e mês</Text>
-            <View style={styles.inputRow}>
-              <TextInput
-                style={styles.smallInput}
-                placeholder="DD"
-                placeholderTextColor="#666"
-                keyboardType="numeric"
-                maxLength={2}
-                value={day}
-                onChangeText={setDay}
-              />
-              <Text style={styles.separator}>/</Text>
-              <TextInput
-                style={styles.smallInput}
-                placeholder="MM"
-                placeholderTextColor="#666"
-                keyboardType="numeric"
-                maxLength={2}
-                value={month}
-                onChangeText={setMonth}
-              />
+          {/* Botão Selecionar Servidor */}
+          <TouchableOpacity 
+            style={styles.serverButton} 
+            onPress={() => setModalVisible(true)}
+          >
+            <Text style={styles.serverButtonText}>
+              {selectedServer ? selectedServer.title : 'Selecione um servidor'}
+            </Text>
+            <Text style={styles.serverButtonArrow}>›</Text>
+          </TouchableOpacity>
+
+          {/* Seção Data e Hora */}
+          <View style={styles.dateTimeSection}>
+            <View style={styles.dateTimeGroup}>
+              <Text style={styles.sectionLabel}>Dia e mês</Text>
+              <View style={styles.inputRow}>
+                <TextInput
+                  style={styles.smallInput}
+                  placeholder="DD"
+                  placeholderTextColor="#666"
+                  keyboardType="numeric"
+                  maxLength={2}
+                  value={day}
+                  onChangeText={setDay}
+                />
+                <Text style={styles.separator}>/</Text>
+                <TextInput
+                  style={styles.smallInput}
+                  placeholder="MM"
+                  placeholderTextColor="#666"
+                  keyboardType="numeric"
+                  maxLength={2}
+                  value={month}
+                  onChangeText={setMonth}
+                />
+              </View>
+            </View>
+
+            <View style={styles.dateTimeGroup}>
+              <Text style={styles.sectionLabel}>Horário</Text>
+              <View style={styles.inputRow}>
+                <TextInput
+                  style={styles.smallInput}
+                  placeholder="HH"
+                  placeholderTextColor="#666"
+                  keyboardType="numeric"
+                  maxLength={2}
+                  value={hour}
+                  onChangeText={setHour}
+                />
+                <Text style={styles.separator}>:</Text>
+                <TextInput
+                  style={styles.smallInput}
+                  placeholder="MM"
+                  placeholderTextColor="#666"
+                  keyboardType="numeric"
+                  maxLength={2}
+                  value={minute}
+                  onChangeText={setMinute}
+                />
+              </View>
             </View>
           </View>
 
-          <View style={styles.dateTimeGroup}>
-            <Text style={styles.sectionLabel}>Horário</Text>
-            <View style={styles.inputRow}>
-              <TextInput
-                style={styles.smallInput}
-                placeholder="HH"
-                placeholderTextColor="#666"
-                keyboardType="numeric"
-                maxLength={2}
-                value={hour}
-                onChangeText={setHour}
-              />
-              <Text style={styles.separator}>:</Text>
-              <TextInput
-                style={styles.smallInput}
-                placeholder="MM"
-                placeholderTextColor="#666"
-                keyboardType="numeric"
-                maxLength={2}
-                value={minute}
-                onChangeText={setMinute}
-              />
+          {/* Seção Descrição */}
+          <View style={styles.descriptionContainer}>
+            <View style={styles.descriptionHeader}>
+              <Text style={styles.sectionLabel}>Descrição</Text>
+              <Text style={styles.charCount}>Max 100 caracteres</Text>
             </View>
+            <TextInput
+              style={styles.descriptionInput}
+              multiline
+              numberOfLines={4}
+              maxLength={100}
+              placeholder="É hora de chamar os challengers para perder uma partida da ranked"
+              placeholderTextColor="#666"
+              value={description}
+              onChangeText={setDescription}
+            />
           </View>
-        </View>
 
-        {/* Seção Descrição */}
-        <View style={styles.descriptionContainer}>
-          <View style={styles.descriptionHeader}>
-            <Text style={styles.sectionLabel}>Descrição</Text>
-            <Text style={styles.charCount}>Max 100 caracteres</Text>
-          </View>
-          <TextInput
-            style={styles.descriptionInput}
-            multiline
-            numberOfLines={4}
-            maxLength={100}
-            placeholder="É hora de chamar os challengers para perder uma partida da ranked"
-            placeholderTextColor="#666"
-            value={description}
-            onChangeText={setDescription}
-          />
-        </View>
+          {/* Botão Agendar */}
+          <TouchableOpacity style={styles.scheduleButton} onPress={handleSchedule}>
+            <Text style={styles.scheduleButtonText}>Agendar</Text>
+          </TouchableOpacity>
 
-        {/* Botão Agendar */}
-        <TouchableOpacity style={styles.scheduleButton} onPress={handleSchedule}>
-          <Text style={styles.scheduleButtonText}>Agendar</Text>
-        </TouchableOpacity>
+        </ScrollView>
+      </Background>
 
-      </ScrollView>
-
-      {/* Modal de Servidor */}
+      {/* Modal FORA do Background */}
       <ServerModal 
         visible={modalVisible}
         onClose={() => setModalVisible(false)}
         onSelect={handleSelectServer}
       />
-    </Background>
+    </>
   );
 }
 
@@ -200,6 +206,9 @@ const styles = StyleSheet.create({
     color: '#FFF',
     fontSize: 20,
     fontWeight: 'bold',
+  },
+  spacer: {
+    width: 24,
   },
   sectionLabel: {
     color: '#FFF',

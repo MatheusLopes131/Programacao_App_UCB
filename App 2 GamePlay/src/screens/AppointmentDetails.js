@@ -16,19 +16,19 @@ import Background from '../components/Background';
 const players = [
   { 
     id: '1', 
-    name: 'Tiago Lucktenberg', 
+    name: 'Patrick Estrela', 
     role: 'Anfitrião', 
     avatar: require('../../assets/jogador_1.png') 
   },
   { 
     id: '2', 
-    name: 'Rodrigo Gonçalves', 
+    name: 'Bob Esponja', 
     role: 'Convidado', 
     avatar: require('../../assets/jogador_2.png') 
   },
   { 
     id: '3', 
-    name: 'Diogo Fernandes', 
+    name: 'Lula Molusco', 
     role: 'Convidado', 
     avatar: require('../../assets/jogador_3.png') 
   },

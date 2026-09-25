@@ -21,40 +21,42 @@ const servers = [
 
 export default function ServerModal({ visible, onClose, onSelect }) {
   return (
-    <Modal
-      transparent={true}
-      visible={visible}
-      animationType="slide"
-      onRequestClose={onClose}
-    >
-      <View style={styles.overlay}>
-        <View style={styles.container}>
-          {/* Cabeçalho do Modal */}
-          <View style={styles.header}>
-            <Text style={styles.headerTitle}>Selecione um servidor</Text>
-          </View>
+    <>
+      <Modal
+        transparent={true}
+        visible={visible}
+        animationType="slide"
+        onRequestClose={onClose}
+      >
+        <View style={styles.overlay}>
+          <View style={styles.container}>
+            {/* Cabeçalho do Modal */}
+            <View style={styles.header}>
+              <Text style={styles.headerTitle}>Selecione um servidor</Text>
+            </View>
 
-          {/* Lista de Servidores */}
-          <FlatList
-            data={servers}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-              <TouchableOpacity 
-                style={styles.serverItem} 
-                onPress={() => onSelect(item)}
-              >
-                <Image source={item.gameImage} style={styles.serverImage} />
-                <View style={styles.serverInfo}>
-                  <Text style={styles.serverTitle}>{item.title}</Text>
-                  <Text style={styles.serverCategory}>{item.category}</Text>
-                </View>
-                <Text style={styles.arrow}>›</Text>
-              </TouchableOpacity>
-            )}
-          />
+            {/* Lista de Servidores */}
+            <FlatList
+              data={servers}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => (
+                <TouchableOpacity 
+                  style={styles.serverItem} 
+                  onPress={() => onSelect(item)}
+                >
+                  <Image source={item.gameImage} style={styles.serverImage} />
+                  <View style={styles.serverInfo}>
+                    <Text style={styles.serverTitle}>{item.title}</Text>
+                    <Text style={styles.serverCategory}>{item.category}</Text>
+                  </View>
+                  <Text style={styles.arrow}>›</Text>
+                </TouchableOpacity>
+              )}
+            />
+          </View>
         </View>
-      </View>
-    </Modal>
+      </Modal>
+    </>
   );
 }
 

@@ -13,7 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 import Background from '../components/Background';
 import CategoryCard from '../components/CategoryCard';
 import AppointmentCard from '../components/AppointmentCard';
-import ExitModal from '../components/ExitModal'; // Importando o modal de saída
+import ExitModal from '../components/ExitModal';
 
 // Dados simulados para as categorias
 const categories = [
@@ -74,7 +74,7 @@ const appointments = [
 
 export default function Home() {
   const navigation = useNavigation();
-  const [exitModalVisible, setExitModalVisible] = useState(false); // Estado do modal de saída
+  const [exitModalVisible, setExitModalVisible] = useState(false);
 
   return (
     <Background>
@@ -85,12 +85,14 @@ export default function Home() {
         {/* Cabeçalho com Perfil */}
         <View style={styles.header}>
           <View style={styles.profileContainer}>
+            {/* Avatar atualizado para jogador_1.png */}
             <Image 
-              source={require('../../assets/avatar.png')} 
+              source={require('../../assets/jogador_1.png')} 
               style={styles.avatar} 
             />
             <View style={styles.profileText}>
-              <Text style={styles.greeting}>Olá, Tiago</Text>
+              {/* Nome atualizado para Patrick */}
+              <Text style={styles.greeting}>Olá, Patrick</Text>
               <Text style={styles.subGreeting}>Hoje é dia de vitória</Text>
             </View>
           </View>
@@ -136,7 +138,6 @@ export default function Home() {
           data={appointments}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            // Envolvendo o card em TouchableOpacity para navegar para os detalhes
             <TouchableOpacity 
               onPress={() => navigation.navigate('AppointmentDetails', { appointment: item })}
             >
@@ -162,7 +163,6 @@ export default function Home() {
         onClose={() => setExitModalVisible(false)}
         onConfirm={() => {
           alert('Saindo do GamePlay...');
-          // Em um app real, você usaria: BackHandler.exitApp();
         }}
       />
     </Background>
