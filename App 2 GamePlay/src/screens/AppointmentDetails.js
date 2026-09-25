@@ -24,7 +24,7 @@ const players = [
     id: '2', 
     name: 'Rodrigo Gonçalves', 
     role: 'Convidado', 
-    avatar: require('../../assets/Jogador_2.png') // Atenção ao J maiúsculo
+    avatar: require('../../assets/jogador_2.png') 
   },
   { 
     id: '3', 
