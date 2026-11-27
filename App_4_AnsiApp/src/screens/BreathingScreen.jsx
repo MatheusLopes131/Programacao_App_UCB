@@ -91,9 +91,7 @@ export default function BreathingScreen() {
     setSegundos(5);
   }
 
-  // NOVA FUNÇÃO: Mostra o alerta antes de reiniciar
   function confirmarReinicio() {
-    // Se o exercício nem começou (contador em 1/10 e parado), reinicia direto sem perguntar
     if (!emAndamento && contadorAtual === 1 && limite === 10) {
       reiniciarExercicio();
       return;
@@ -103,15 +101,8 @@ export default function BreathingScreen() {
       "Recomeçar exercício",
       "Tem certeza que deseja recomeçar? Seu progresso atual será perdido.",
       [
-        {
-          text: "Cancelar",
-          style: "cancel"
-        },
-        { 
-          text: "Sim, recomeçar", 
-          onPress: () => reiniciarExercicio(),
-          style: "destructive" // No iOS, deixa o texto vermelho
-        }
+        { text: "Cancelar", style: "cancel" },
+        { text: "Sim, recomeçar", onPress: () => reiniciarExercicio(), style: "destructive" }
       ]
     );
   }
@@ -140,10 +131,10 @@ export default function BreathingScreen() {
             segundos={segundos}
             fase={fase}
             aguardando={aguardando}
+            emAndamento={emAndamento} // <-- PASSOU A PROP AQUI
           />
 
           <View style={styles.containerBotoes}>
-            {/* Botão de recomeçar agora chama a função de confirmação */}
             <TouchableOpacity style={styles.botaoIcone} onPress={confirmarReinicio}>
               <Ionicons name="refresh" size={28} color="#6C63FF" />
             </TouchableOpacity>

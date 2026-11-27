@@ -7,7 +7,8 @@ const STROKE_WIDTH = 10;
 const RADIUS = (SIZE - STROKE_WIDTH) / 2;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 
-export default function BreathingTimer({ segundos, fase, aguardando }) {
+// Adicionado a prop 'emAndamento' para saber se o exercício já começou
+export default function BreathingTimer({ segundos, fase, aguardando, emAndamento }) {
   const progresso = aguardando ? 0 : segundos / 5;
   const strokeDashoffset = CIRCUMFERENCE - CIRCUMFERENCE * progresso;
 
@@ -23,7 +24,7 @@ export default function BreathingTimer({ segundos, fase, aguardando }) {
             r={RADIUS}
             strokeWidth={STROKE_WIDTH}
           />
-          {!aguardando && (
+          {emAndamento && !aguardando && (
             <Circle
               stroke={fase === 'Puxe o ar' ? '#6C63FF' : '#10B981'}
               fill="none"
@@ -39,9 +40,14 @@ export default function BreathingTimer({ segundos, fase, aguardando }) {
           )}
         </Svg>
         <View style={styles.textoContainer}>
-          {aguardando ? (
+          {!emAndamento ? (
+            // Texto que aparece antes de iniciar
+            <Text style={styles.textoInicial}>Clique no botão{"\n"}para iniciar</Text>
+          ) : aguardando ? (
+            // Texto que aparece quando o ciclo termina
             <Text style={styles.textoAguardando}>Aperte{"\n"}próximo</Text>
           ) : (
+            // Texto durante o exercício
             <>
               <Text style={styles.faseTexto}>{fase}</Text>
               <Text style={styles.segundosTexto}>{segundos}s</Text>
@@ -57,8 +63,9 @@ const styles = StyleSheet.create({
   container: { alignItems: 'center', justifyContent: 'center', marginVertical: 20 },
   circuloContainer: { position: 'relative', alignItems: 'center', justifyContent: 'center' },
   svg: { transform: [{ rotate: '0deg' }] },
-  textoContainer: { position: 'absolute', alignItems: 'center' },
+  textoContainer: { position: 'absolute', alignItems: 'center', paddingHorizontal: 10 },
   faseTexto: { fontSize: 20, fontWeight: '600', color: '#4C1D95', marginBottom: 4 },
   segundosTexto: { fontSize: 28, fontWeight: 'bold', color: '#1F2937' },
   textoAguardando: { fontSize: 20, fontWeight: 'bold', color: '#6C63FF', textAlign: 'center' },
+  textoInicial: { fontSize: 18, fontWeight: '600', color: '#6B7280', textAlign: 'center' },
 });
