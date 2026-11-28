@@ -109,7 +109,6 @@ export default function MedicationScreen({ navigation }) {
         medicamentoEditando={medicamentoEditando}
       />
 
-      {/* NOVO MODAL DE VISUALIZAÇÃO BONITO */}
       <Modal visible={modalViewVisivel} animationType="fade" transparent={true}>
         <View style={styles.modalContainer}>
           <View style={styles.modalConteudo}>
@@ -159,15 +158,16 @@ export default function MedicationScreen({ navigation }) {
         </View>
       </Modal>
 
+      {/* MODAL DE AJUDA ATUALIZADO */}
       <Modal visible={modalAjudaVisivel} animationType="fade" transparent={true}>
         <View style={styles.modalContainer}>
           <View style={styles.modalConteudo}>
             <Text style={styles.modalTitulo}>Como funciona?</Text>
             <Text style={styles.modalTexto}>
-              1. Toque no botão "+" para cadastrar um medicamento.{"\n\n"}
-              2. Informe o nome, quantas vezes ao dia e se é de uso Contínuo ou SOS.{"\n\n"}
-              3. Se for Contínuo, configure os dias e horários para receber notificações no seu celular.{"\n\n"}
-              4. Use o lápis para editar e a lixeira para excluir.
+              1. Toque no <Text style={{ fontWeight: 'bold', color: '#6C63FF' }}>➕</Text> para cadastrar um medicamento.{"\n\n"}
+              2. Informe o nome, quantas vezes ao dia e se é de uso <Text style={{ fontWeight: 'bold' }}>Contínuo</Text> ou <Text style={{ fontWeight: 'bold' }}>SOS</Text>.{"\n\n"}
+              3. Se for <Text style={{ fontWeight: 'bold', color: '#6C63FF' }}>Contínuo</Text>, configure os dias e horários para receber notificações no seu celular.{"\n\n"}
+              4. Use o <Text style={{ fontWeight: 'bold', color: '#6C63FF' }}>✏️ lápis</Text> para editar e a <Text style={{ fontWeight: 'bold', color: '#EF4444' }}>🗑️ lixeira</Text> para excluir.
             </Text>
             <TouchableOpacity style={styles.botaoFecharModal} onPress={() => setModalAjudaVisivel(false)}>
               <Text style={styles.textoBotaoFechar}>Entendi</Text>
@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
   tagVisualizacao: { backgroundColor: '#EDE9FE', paddingHorizontal: 12, paddingVertical: 6, borderRadius: 16 },
   tagTexto: { color: '#6C63FF', fontSize: 14, fontWeight: '600' },
 
-  modalTexto: { fontSize: 15, color: '#374151', lineHeight: 22, marginBottom: 24 },
+  modalTexto: { fontSize: 15, color: '#374151', lineHeight: 24, marginBottom: 24 },
   botaoFecharModal: { backgroundColor: '#6C63FF', padding: 14, borderRadius: 12, alignItems: 'center', marginTop: 20 },
   textoBotaoFechar: { color: '#FFF', fontSize: 16, fontWeight: 'bold' },
 });

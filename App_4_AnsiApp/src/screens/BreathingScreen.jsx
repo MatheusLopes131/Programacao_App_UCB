@@ -131,7 +131,7 @@ export default function BreathingScreen() {
             segundos={segundos}
             fase={fase}
             aguardando={aguardando}
-            emAndamento={emAndamento} // <-- PASSOU A PROP AQUI
+            emAndamento={emAndamento}
           />
 
           <View style={styles.containerBotoes}>
@@ -156,17 +156,18 @@ export default function BreathingScreen() {
         </View>
       )}
 
+      {/* MODAL DE AJUDA ATUALIZADO */}
       <Modal visible={modalVisivel} animationType="slide" transparent={true}>
         <View style={styles.modalContainer}>
           <View style={styles.modalConteudo}>
             <Text style={styles.modalTitulo}>Como funciona?</Text>
             <Text style={styles.modalTexto}>
-              1. O contador vai de 1/10 até 10/10.{"\n"}
-              2. Depois, ele inverte: vai de 1/9 até 9/9, e assim por diante até chegar em 1/1.{"\n"}
-              3. O círculo mostra o tempo: inspire por 5s e expire por 5s.{"\n"}
-              4. Use o botão de play para começar e o de avançar para registrar cada respiração. O botão de recomeçar zera o exercício.{"\n"}
+              1. O contador vai de <Text style={{ fontWeight: 'bold', color: '#6C63FF' }}>1/10 até 10/10</Text>.{"\n\n"}
+              2. Depois, ele inverte: vai de <Text style={{ fontWeight: 'bold', color: '#6C63FF' }}>1/9 até 9/9</Text>, e assim por diante até chegar em <Text style={{ fontWeight: 'bold', color: '#6C63FF' }}>1/1</Text>.{"\n\n"}
+              3. O círculo mostra o tempo: inspire por 5s e expire por 5s.{"\n\n"}
+              4. Use o botão <Text style={{ fontWeight: 'bold', color: '#6C63FF' }}>▶️ Play</Text> para começar e o de <Text style={{ fontWeight: 'bold', color: '#6C63FF' }}>⏩ Avançar</Text> para registrar cada respiração. O botão <Text style={{ fontWeight: 'bold', color: '#6C63FF' }}>🔄 Recomeçar</Text> zera o exercício.{"\n\n"}
               5. Você pode fazer esse exercício em qualquer lugar. Desfoque do arredor e foque na sua respiração. Se o cronômetro não bater com o tempo da sua respiração natural, você pode esperar o timer acabar ou apenas dar o seu tempo antes de clicar em próxima contagem.{"\n\n"}
-              <Text style={{ fontWeight: 'bold' }}>Dica:</Text> Respirar rápido não ajuda tanto. Respire fundo, pausadamente e tente relaxar seu corpo e mente. Puxe o ar pelo nariz e solte pela boca sempre.
+              <Text style={{ fontWeight: 'bold', color: '#10B981' }}>Dica:</Text> Respirar rápido não ajuda tanto. Respire fundo, pausadamente e tente relaxar seu corpo e mente. Puxe o ar pelo nariz e solte pela boca sempre.
             </Text>
             <TouchableOpacity style={styles.botaoFecharModal} onPress={() => setModalVisivel(false)}>
               <Text style={styles.textoBotaoAcao}>Entendi</Text>
@@ -198,6 +199,6 @@ const styles = StyleSheet.create({
   modalContainer: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' },
   modalConteudo: { width: '90%', backgroundColor: '#FFF', padding: 24, borderRadius: 16 },
   modalTitulo: { fontSize: 22, fontWeight: 'bold', color: '#1F2937', marginBottom: 16 },
-  modalTexto: { fontSize: 15, color: '#374151', lineHeight: 22, marginBottom: 24 },
+  modalTexto: { fontSize: 15, color: '#374151', lineHeight: 24, marginBottom: 24 },
   botaoFecharModal: { backgroundColor: '#6C63FF', padding: 14, borderRadius: 12, alignItems: 'center' },
 });

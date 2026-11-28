@@ -78,7 +78,6 @@ export default function TriggersScreen() {
     return acc;
   }, []);
 
-  // Ordenação por horário dentro de cada grupo de data
   dadosAgrupados.forEach(grupo => {
     grupo.data.sort((a, b) => {
       const minutosA = converterHorarioParaMinutos(a.horario);
@@ -149,18 +148,18 @@ export default function TriggersScreen() {
       
       <TriggerViewModal visivel={modalViewVisivel} aoFechar={() => setModalViewVisivel(false)} gatilho={gatilhoVisualizando} />
 
-      {/* Modal de Ajuda Atualizado */}
+      {/* MODAL DE AJUDA ATUALIZADO */}
       <Modal visible={modalAjudaVisivel} animationType="fade" transparent={true}>
         <View style={styles.modalContainer}>
           <View style={styles.modalConteudo}>
             <Text style={styles.modalTitulo}>Como funciona?</Text>
             <Text style={styles.modalTexto}>
-              1. Toque no botão "+" para registrar um novo gatilho.{"\n\n"}
-              2. Preencha o título, data e horário. Todos os três são obrigatórios. Você pode escolher datas passadas, mas não futuras.{"\n\n"}
+              1. Toque no <Text style={{ fontWeight: 'bold', color: '#6C63FF' }}>➕</Text> para registrar um novo gatilho.{"\n\n"}
+              2. Preencha o título, data e horário. <Text style={{ fontWeight: 'bold' }}>Todos os três são obrigatórios</Text>. Você pode escolher datas passadas, mas não futuras.{"\n\n"}
               3. Descrição, sintomas e o nível de ansiedade são opcionais, mas ajudam a entender melhor o que aconteceu.{"\n\n"}
-              4. O histórico é separado por "Hoje", "Ontem" e datas anteriores. Dentro de cada dia, os mais recentes aparecem no topo.{"\n\n"}
-              5. A borda colorida de cada card indica o nível de ansiedade: tons de verde (leve) a vermelho (intenso).{"\n\n"}
-              6. Toque no gatilho para ver todos os detalhes. Use o lápis para editar ou a lixeira para excluir.
+              4. O histórico é separado por <Text style={{ fontWeight: 'bold', color: '#6B7280' }}>Hoje</Text>, <Text style={{ fontWeight: 'bold', color: '#6B7280' }}>Ontem</Text> e datas anteriores. Dentro de cada dia, os mais recentes aparecem no topo.{"\n\n"}
+              5. A borda colorida de cada card indica o nível de ansiedade: tons de <Text style={{ fontWeight: 'bold', color: '#10B981' }}>verde (leve)</Text> a <Text style={{ fontWeight: 'bold', color: '#EF4444' }}>vermelho (intenso)</Text>.{"\n\n"}
+              6. Toque no gatilho para ver todos os detalhes. Use o <Text style={{ fontWeight: 'bold', color: '#6C63FF' }}>✏️ lápis</Text> para editar ou a <Text style={{ fontWeight: 'bold', color: '#EF4444' }}>🗑️ lixeira</Text> para excluir.
             </Text>
             <TouchableOpacity style={styles.botaoFecharModal} onPress={() => setModalAjudaVisivel(false)}>
               <Text style={styles.textoBotaoFechar}>Entendi</Text>
@@ -188,7 +187,7 @@ const styles = StyleSheet.create({
   modalContainer: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' },
   modalConteudo: { width: '90%', backgroundColor: '#FFF', padding: 24, borderRadius: 16 },
   modalTitulo: { fontSize: 22, fontWeight: 'bold', color: '#1F2937', marginBottom: 16 },
-  modalTexto: { fontSize: 14, color: '#374151', lineHeight: 22, marginBottom: 24 },
+  modalTexto: { fontSize: 15, color: '#374151', lineHeight: 24, marginBottom: 24 },
   botaoFecharModal: { backgroundColor: '#6C63FF', padding: 14, borderRadius: 12, alignItems: 'center' },
   textoBotaoFechar: { color: '#FFF', fontSize: 16, fontWeight: 'bold' },
 });
