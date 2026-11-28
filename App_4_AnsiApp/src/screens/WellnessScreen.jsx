@@ -15,21 +15,16 @@ export default function WellnessScreen({ navigation }) {
       </View>
 
       <View style={styles.containerBotoes}>
-        {/* Botão de Medicação */}
-        <TouchableOpacity 
-          style={styles.botaoBolinha} 
-          onPress={() => navigation.navigate('Medication')}
-        >
+        <TouchableOpacity style={styles.botaoBolinha} onPress={() => navigation.navigate('Medication')}>
           <Text style={styles.emoji}>💊</Text>
         </TouchableOpacity>
 
-        {/* Botão de Sono (Desativado por enquanto) */}
-        <TouchableOpacity style={[styles.botaoBolinha, { opacity: 0.5 }]} disabled>
+        {/* Botão do Sono habilitado */}
+        <TouchableOpacity style={styles.botaoBolinha} onPress={() => navigation.navigate('Sleep')}>
           <Text style={styles.emoji}>💤</Text>
         </TouchableOpacity>
 
-        {/* Botão de Atividade Física (Desativado por enquanto) */}
-        <TouchableOpacity style={[styles.botaoBolinha, { opacity: 0.5 }]} disabled>
+        <TouchableOpacity style={styles.botaoBolinha} onPress={() => navigation.navigate('Activity')}>
           <Text style={styles.emoji}>🏋️</Text>
         </TouchableOpacity>
       </View>
@@ -41,8 +36,8 @@ export default function WellnessScreen({ navigation }) {
             <Text style={styles.modalTexto}>
               Aqui você cuida da sua saúde de forma integrada:{"\n\n"}
               💊 <Text style={{ fontWeight: 'bold' }}>Medicação:</Text> Cadastre seus remédios e receba lembretes nos horários certos.{"\n\n"}
-              💤 <Text style={{ fontWeight: 'bold' }}>Sono:</Text> Acompanhe suas horas de descanso (em breve).{"\n\n"}
-              🏋️ <Text style={{ fontWeight: 'bold' }}>Atividade Física:</Text> Registre seus exercícios (em breve).
+              💤 <Text style={{ fontWeight: 'bold' }}>Sono:</Text> Registre seus horários de dormir e acordar, e veja a média de horas descansadas.{"\n\n"}
+              🏋️ <Text style={{ fontWeight: 'bold' }}>Atividade Física:</Text> Registre as atividades que você praticou no dia e faça seu check-in diário.
             </Text>
             <TouchableOpacity style={styles.botaoFecharModal} onPress={() => setModalAjudaVisivel(false)}>
               <Text style={styles.textoBotaoFechar}>Entendi</Text>

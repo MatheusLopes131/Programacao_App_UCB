@@ -4,22 +4,28 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
 
-// Telas
 import HomeScreen from './src/screens/HomeScreen';
 import BreathingScreen from './src/screens/BreathingScreen';
 import TriggersScreen from './src/screens/TriggersScreen';
 import WellnessScreen from './src/screens/WellnessScreen';
-import MedicationScreen from './src/screens/MedicationScreen'; // Nova tela
+import MedicationScreen from './src/screens/MedicationScreen';
+import ActivityScreen from './src/screens/ActivityScreen';
+import ActivityHistoryScreen from './src/screens/ActivityHistoryScreen';
+import SleepScreen from './src/screens/SleepScreen'; // Nova tela
+import SleepHistoryScreen from './src/screens/SleepHistoryScreen'; // Nova tela
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-// Componente que agrupa as telas da aba Bem-estar
 function WellnessStack() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="WellnessHome" component={WellnessScreen} />
       <Stack.Screen name="Medication" component={MedicationScreen} />
+      <Stack.Screen name="Activity" component={ActivityScreen} />
+      <Stack.Screen name="ActivityHistory" component={ActivityHistoryScreen} />
+      <Stack.Screen name="Sleep" component={SleepScreen} />
+      <Stack.Screen name="SleepHistory" component={SleepHistoryScreen} />
     </Stack.Navigator>
   );
 }
