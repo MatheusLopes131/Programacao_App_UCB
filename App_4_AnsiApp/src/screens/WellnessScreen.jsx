@@ -1,69 +1,70 @@
-import { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import { salvarDados } from '../hooks/useStorage';
-import { calcularHorasSono, formatarHoras } from '../utils/dateHelpers';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Modal } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
-export default function WellnessScreen() {
-  const [horarioDormir, setHorarioDormir] = useState(new Date());
-  const [horarioAcordar, setHorarioAcordar] = useState(new Date());
-  const [mostrarPicker, setMostrarPicker] = useState(null);
-  const [resultado, setResultado] = useState(null);
-
-  function aoMudarData(event, data) {
-    setMostrarPicker(null);
-    if (!data) return;
-    if (mostrarPicker === 'dormir') setHorarioDormir(data);
-    if (mostrarPicker === 'acordar') setHorarioAcordar(data);
-  }
-
-  async function calcularESalvar() {
-    const horas = calcularHorasSono(horarioDormir, horarioAcordar);
-    const texto = formatarHoras(horas);
-    setResultado(texto);
-    await salvarDados('@ansiapp:sono', {
-      dormir: horarioDormir.toISOString(),
-      acordar: horarioAcordar.toISOString(),
-      horas,
-    });
-  }
+export default function WellnessScreen({ navigation }) {
+  const [modalAjudaVisivel, setModalAjudaVisivel] = useState(false);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo}>Registro de Sono</Text>
-      <TouchableOpacity style={styles.campo} onPress={() => setMostrarPicker('dormir')}>
-        <Text style={styles.label}>Fui dormir:</Text>
-        <Text style={styles.valor}>{horarioDormir.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.campo} onPress={() => setMostrarPicker('acordar')}>
-        <Text style={styles.label}>Acordei:</Text>
-        <Text style={styles.valor}>{horarioAcordar.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</Text>
-      </TouchableOpacity>
-      {mostrarPicker && (
-        <DateTimePicker value={mostrarPicker === 'dormir' ? horarioDormir : horarioAcordar} mode="time" display={Platform.OS === 'ios' ? 'spinner' : 'default'} onChange={aoMudarData} />
-      )}
-      <TouchableOpacity style={styles.botao} onPress={calcularESalvar}>
-        <Text style={styles.botaoTexto}>Calcular Sono</Text>
-      </TouchableOpacity>
-      {resultado && (
-        <View style={styles.resultado}>
-          <Text style={styles.resultadoLabel}>Você dormiu</Text>
-          <Text style={styles.resultadoValor}>{resultado}</Text>
+      <View style={styles.header}>
+        <Text style={styles.titulo}>Bem-estar</Text>
+        <TouchableOpacity onPress={() => setModalAjudaVisivel(true)}>
+          <Ionicons name="help-circle-outline" size={32} color="#6C63FF" />
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.containerBotoes}>
+        {/* Botão de Medicação */}
+        <TouchableOpacity 
+          style={styles.botaoBolinha} 
+          onPress={() => navigation.navigate('Medication')}
+        >
+          <Text style={styles.emoji}>💊</Text>
+        </TouchableOpacity>
+
+        {/* Botão de Sono (Desativado por enquanto) */}
+        <TouchableOpacity style={[styles.botaoBolinha, { opacity: 0.5 }]} disabled>
+          <Text style={styles.emoji}>💤</Text>
+        </TouchableOpacity>
+
+        {/* Botão de Atividade Física (Desativado por enquanto) */}
+        <TouchableOpacity style={[styles.botaoBolinha, { opacity: 0.5 }]} disabled>
+          <Text style={styles.emoji}>🏋️</Text>
+        </TouchableOpacity>
+      </View>
+
+      <Modal visible={modalAjudaVisivel} animationType="fade" transparent={true}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalConteudo}>
+            <Text style={styles.modalTitulo}>Bem-estar</Text>
+            <Text style={styles.modalTexto}>
+              Aqui você cuida da sua saúde de forma integrada:{"\n\n"}
+              💊 <Text style={{ fontWeight: 'bold' }}>Medicação:</Text> Cadastre seus remédios e receba lembretes nos horários certos.{"\n\n"}
+              💤 <Text style={{ fontWeight: 'bold' }}>Sono:</Text> Acompanhe suas horas de descanso (em breve).{"\n\n"}
+              🏋️ <Text style={{ fontWeight: 'bold' }}>Atividade Física:</Text> Registre seus exercícios (em breve).
+            </Text>
+            <TouchableOpacity style={styles.botaoFecharModal} onPress={() => setModalAjudaVisivel(false)}>
+              <Text style={styles.textoBotaoFechar}>Entendi</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      )}
+      </Modal>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, backgroundColor: '#FFF' },
-  titulo: { fontSize: 22, fontWeight: 'bold', marginTop: 40, marginBottom: 24, color: '#1F2937' },
-  campo: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#F3F4F6', padding: 16, borderRadius: 12, marginBottom: 12 },
-  label: { fontSize: 16, color: '#374151' },
-  valor: { fontSize: 18, fontWeight: '600', color: '#6C63FF' },
-  botao: { backgroundColor: '#6C63FF', padding: 14, borderRadius: 12, alignItems: 'center', marginTop: 12 },
-  botaoTexto: { color: '#FFF', fontSize: 16, fontWeight: '600' },
-  resultado: { marginTop: 24, backgroundColor: '#EDE9FE', padding: 20, borderRadius: 12, alignItems: 'center' },
-  resultadoLabel: { fontSize: 14, color: '#5B21B6' },
-  resultadoValor: { fontSize: 32, fontWeight: 'bold', color: '#4C1D95', marginTop: 4 },
+  container: { flex: 1, backgroundColor: '#FFF', padding: 20 },
+  header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 60, marginBottom: 40 },
+  titulo: { fontSize: 24, fontWeight: 'bold', color: '#1F2937' },
+  containerBotoes: { flex: 1, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' },
+  botaoBolinha: { width: 90, height: 90, borderRadius: 45, backgroundColor: '#F3F4F6', justifyContent: 'center', alignItems: 'center', shadowColor: '#000', shadowOpacity: 0.1, shadowRadius: 5, elevation: 3 },
+  emoji: { fontSize: 40 },
+  modalContainer: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' },
+  modalConteudo: { width: '90%', backgroundColor: '#FFF', padding: 24, borderRadius: 16 },
+  modalTitulo: { fontSize: 22, fontWeight: 'bold', color: '#1F2937', marginBottom: 16 },
+  modalTexto: { fontSize: 15, color: '#374151', lineHeight: 22, marginBottom: 24 },
+  botaoFecharModal: { backgroundColor: '#6C63FF', padding: 14, borderRadius: 12, alignItems: 'center' },
+  textoBotaoFechar: { color: '#FFF', fontSize: 16, fontWeight: 'bold' },
 });

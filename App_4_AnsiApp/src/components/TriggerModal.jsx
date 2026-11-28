@@ -8,15 +8,12 @@ const SINTOMAS_PRE_SETADOS = [
   { id: 'tremedeira', label: '🥶 Tremedeira' },
 ];
 
-// Função para calcular a cor com base na nota (1 a 10)
 export const obterCorAnsiedade = (nota) => {
-  if (!nota || nota === 0) return '#D1D5DB'; // Cinza para não preenchido
+  if (!nota || nota === 0) return '#D1D5DB';
   if (nota <= 5) {
-    // Verde escuro (1) ao verde claro (5)
     const coresVerde = ['#047857', '#059669', '#10B981', '#34D399', '#6EE7B7'];
     return coresVerde[nota - 1];
   } else {
-    // Vermelho claro (6) ao vermelho escuro (10)
     const coresVermelho = ['#FCA5A5', '#F87171', '#EF4444', '#DC2626', '#991B1B'];
     return coresVermelho[nota - 6];
   }
@@ -28,7 +25,7 @@ export default function TriggerModal({ visivel, aoFechar, aoSalvar, gatilhoEdita
   const [dataSelecionada, setDataSelecionada] = useState(new Date());
   const [horarioSelecionado, setHorarioSelecionado] = useState(new Date());
   const [sintomasSelecionados, setSintomasSelecionados] = useState([]);
-  const [nivelAnsiedade, setNivelAnsiedade] = useState(0); // 0 = não preenchido
+  const [nivelAnsiedade, setNivelAnsiedade] = useState(0);
   
   const [mostrarPickerData, setMostrarPickerData] = useState(false);
   const [mostrarPickerHora, setMostrarPickerHora] = useState(false);
@@ -82,7 +79,6 @@ export default function TriggerModal({ visivel, aoFechar, aoSalvar, gatilhoEdita
     const dataFormatada = dataSelecionada.toISOString();
     const horarioFormatado = horarioSelecionado.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
 
-    // Validação de campos opcionais
     let faltando = [];
     if (!descricao.trim()) faltando.push("Descrição");
     if (nivelAnsiedade === 0) faltando.push("Nível de ansiedade");
@@ -152,15 +148,29 @@ export default function TriggerModal({ visivel, aoFechar, aoSalvar, gatilhoEdita
                 mode="date" 
                 display={Platform.OS === 'ios' ? 'spinner' : 'default'} 
                 onChange={aoMudarData} 
-                maximumDate={new Date()} // <-- BLOQUEIO DE DATAS FUTURAS AQUI
+                maximumDate={new Date()}
               />
             )}
             {mostrarPickerHora && (
               <DateTimePicker value={horarioSelecionado} mode="time" display={Platform.OS === 'ios' ? 'spinner' : 'default'} onChange={aoMudarHora} />
             )}
 
-            <TextInput style={styles.input} placeholder="Acontecimento principal (Título) *" value={titulo} onChangeText={setTitulo} />
-            <TextInput style={[styles.input, styles.inputMultiline]} placeholder="Descrição detalhada..." value={descricao} onChangeText={setDescricao} multiline />
+            {/* Inputs corrigidos com cor explícita e fundo branco */}
+            <TextInput 
+              style={styles.input} 
+              placeholder="Acontecimento principal (Título) *" 
+              placeholderTextColor="#9CA3AF"
+              value={titulo} 
+              onChangeText={setTitulo} 
+            />
+            <TextInput 
+              style={[styles.input, styles.inputMultiline]} 
+              placeholder="Descrição detalhada..." 
+              placeholderTextColor="#9CA3AF"
+              value={descricao} 
+              onChangeText={setDescricao} 
+              multiline 
+            />
 
             <Text style={styles.subtitulo}>Sintomas sentidos:</Text>
             <View style={styles.tagsContainer}>
@@ -180,7 +190,6 @@ export default function TriggerModal({ visivel, aoFechar, aoSalvar, gatilhoEdita
               })}
             </View>
 
-            {/* NOVO: Seletor de Nível de Ansiedade */}
             <Text style={styles.subtitulo}>Nível de ansiedade sentido:</Text>
             <View style={styles.bolinhasContainer}>
               {[...Array(10)].map((_, index) => {
@@ -222,7 +231,6 @@ export default function TriggerModal({ visivel, aoFechar, aoSalvar, gatilhoEdita
 }
 
 const styles = StyleSheet.create({
-  // ... (mantenha os estilos anteriores)
   modalContainer: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' },
   modalConteudo: { width: '90%', maxHeight: '85%', backgroundColor: '#FFF', padding: 20, borderRadius: 16 },
   modalTitulo: { fontSize: 22, fontWeight: 'bold', color: '#1F2937', marginBottom: 16 },
@@ -230,20 +238,29 @@ const styles = StyleSheet.create({
   campoDataHora: { flex: 1, backgroundColor: '#F3F4F6', padding: 12, borderRadius: 12, borderWidth: 1, borderColor: '#E5E7EB' },
   labelDataHora: { fontSize: 12, color: '#6B7280', marginBottom: 4 },
   valorDataHora: { fontSize: 16, fontWeight: '600', color: '#1F2937' },
-  input: { borderWidth: 1, borderColor: '#D1D5DB', borderRadius: 12, padding: 14, fontSize: 16, marginBottom: 12, color: '#1F2937' },
+  
+  // AQUI ESTÃO AS CORREÇÕES DOS INPUTS
+  input: { 
+    borderWidth: 1, 
+    borderColor: '#D1D5DB', 
+    borderRadius: 12, 
+    padding: 14, 
+    fontSize: 16, 
+    marginBottom: 12, 
+    color: '#1F2937', // Cor do texto
+    backgroundColor: '#FFF' // Fundo explícito
+  },
   inputMultiline: { minHeight: 80, textAlignVertical: 'top' },
+  
   subtitulo: { fontSize: 16, fontWeight: '600', color: '#374151', marginTop: 8, marginBottom: 10 },
   tagsContainer: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginBottom: 16 },
   tag: { backgroundColor: '#F3F4F6', paddingHorizontal: 14, paddingVertical: 8, borderRadius: 20, borderWidth: 1, borderColor: '#E5E7EB' },
   tagSelecionada: { backgroundColor: '#EDE9FE', borderColor: '#6C63FF' },
   tagTexto: { color: '#4B5563', fontSize: 14 },
   tagTextoSelecionado: { color: '#6C63FF', fontWeight: '600' },
-  
-  // Estilos das Bolinhas
   bolinhasContainer: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 16 },
   bolinha: { width: 28, height: 28, borderRadius: 14, borderWidth: 2, justifyContent: 'center', alignItems: 'center' },
   bolinhaTexto: { fontSize: 12, fontWeight: 'bold', color: '#4B5563' },
-
   containerBotoes: { flexDirection: 'row', justifyContent: 'space-between', marginTop: 10, gap: 10 },
   botao: { flex: 1, padding: 14, borderRadius: 12, alignItems: 'center' },
   botaoCancelar: { backgroundColor: '#F3F4F6' },
